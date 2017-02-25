@@ -2,7 +2,6 @@ package sorting;
 
 import java.util.Random;
 import java.util.Scanner;
-import static sorting.BubbleSort.bubble_srt;
 
 class init {
     Scanner in = new Scanner(System.in);
@@ -14,6 +13,12 @@ class init {
     // ele : number of elements in the array
     private int max, ele;
     double starttime = 0, endtime = 0;
+    int trials = 1;
+    int j;
+    double[] avg_trials;
+    int flag_for_everything = 0;
+    double least_time = Double.MAX_VALUE;
+    int less_timed_algo = 0;
     
     void generate_elements() {
         Random rand = new Random();
@@ -42,81 +47,159 @@ class init {
         display_elements();
     }
     
-    void timecalc(double x, double y) {
-        System.out.println("The time taken by the bubble sort function is " + (y - x) / 100000 + "  milliseconds");
+    double timecalc(double x, double y) {
+        return ((y - x) / 100000);
+    }
+    
+    void display_avg(double[] a, int f) {
+        double total = 0;
+        for(int k=0; k<a.length; k++) {
+            total += a[k];
+            //System.out.println(a[k]);
+        }
+        System.out.println("[*] The average time taken is: " + (total/a.length));
+        if(flag_for_everything == 1) {
+            check_the_least((total/a.length), f);
+        }
+    }
+    
+    void check_the_least(double d, int algo) {
+        if(least_time > d) {
+            least_time = d;
+            less_timed_algo = algo;
+        }
     }
     
     void operations(int op) {
+        avg_trials = new double[trials];
+        int index=0;
         switch(op) {
             case 1  :
                 System.out.println("[+] Bubble sort selected");
                 BubbleSort bs = new BubbleSort();
-                starttime = System.nanoTime();
-                bubble_srt(random_elements);
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    starttime = System.nanoTime();
+                    bs.bubble_srt(random_elements);
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
+                bs.printNumbers();
+                display_avg(avg_trials, 1);
                 break;
             case 2  : 
                 System.out.println("[+] Selection sort selected");
                 SelectionSort sel = new SelectionSort();
-                starttime = System.nanoTime();
-                sel.sort(random_elements);
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    starttime = System.nanoTime();
+                    sel.sort(random_elements);
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
+                sel.display();
+                display_avg(avg_trials, 2);
                 break;
             case 3  : 
                 System.out.println("[+] Insertion sort selected");
                 InsertionSort ins = new InsertionSort(ele);
-                starttime = System.nanoTime();
-                ins.insSort();
-                endtime = System.nanoTime();
+                
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    ins.input = random_elements;
+                    starttime = System.nanoTime();
+                    ins.insSort();
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
+                ins.display();
+                display_avg(avg_trials, 3);
                 break;
             case 4  : 
                 System.out.println("[+] Quick sort selected");
                 QuickSort quick = new QuickSort();
-                starttime = System.nanoTime();
-                quick.sort(random_elements,ele-1);
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    starttime = System.nanoTime();
+                    quick.sort(random_elements,ele-1);
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
                 quick.display();
+                display_avg(avg_trials, 4);
                 break;
             case 5  : 
                 System.out.println("[+] Merge sort selected");
                 MergeSort mer = new MergeSort();
-                starttime = System.nanoTime();
-                mer.sort(random_elements);
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    starttime = System.nanoTime();
+                    mer.sort(random_elements);
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
                 mer.display();
+                display_avg(avg_trials, 5);
                 break;
             case 6  : 
                 System.out.println("[+] Heap sort selected");
                 HeapSort heap = new HeapSort();
-                starttime = System.nanoTime();
-                heap.sort(random_elements);
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    starttime = System.nanoTime();
+                    heap.sort(random_elements);
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
                 heap.display();
+                display_avg(avg_trials, 6);
                 break;
             case 7  : 
                 System.out.println("[+] Shell sort selected");
                 ShellSort shel = new ShellSort();
-                shel.sequence = random_elements;
-                starttime = System.nanoTime();
-                shel.shellSort();
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    shel.sequence = random_elements;
+                    starttime = System.nanoTime();
+                    shel.shellSort();
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
                 shel.printSequence(shel.sequence);
+                display_avg(avg_trials, 7);
                 break;
             case 8  : 
                 System.out.println("[+] Bucket sort selected");
                 BucketSort buck =new BucketSort();
-                starttime = System.nanoTime();
-                int maxValue = buck.maxValue(random_elements);
-                buck.printSequence(buck.sort(random_elements, maxValue));
-                endtime = System.nanoTime();
+                for(j = 0; j < trials; j++) {
+                    random_elements = backup_re.clone();
+                    starttime = System.nanoTime();
+                    int maxValue = buck.maxValue(random_elements);
+                    buck.sort(backup_re, maxValue);
+                    endtime = System.nanoTime();
+                    avg_trials[index] = timecalc(starttime, endtime);
+                    index++;
+                }
+                buck.printSequence();
+                display_avg(avg_trials, 8);
                 break;
             default  : 
                 System.out.println("Wrong option");
                 break;
-        }
-        if(op >= 1 && op <= 8)
-            timecalc(starttime, endtime);
+        }            
         random_elements = backup_re.clone();
+    }
+    
+    void set_trials(int a) {
+        trials = a;
+        System.out.print("[+] " + trials + " trials set");
     }
 }
 
@@ -146,7 +229,9 @@ public class Sorting {
                 case "h":
                     System.out.println("You have the following options");
                     System.out.println("h | help \t- to know the commands");
+                    System.out.println("a | avg \t- get average time complexity");
                     System.out.println("c | config\t- configure the number of elements");
+                    System.out.println("e | all\t\t- execute all algorithms");
                     System.out.println("o | options \t- to select the sorting algorithm");
                     System.out.println("q | quit \t- to quit the program");
                     System.out.println("r | regen\t- regenerate the random variables");
@@ -167,6 +252,49 @@ public class Sorting {
                     System.out.print("Option: ");
                     option = in.nextInt();
                     i.operations(option);
+                    break;
+                case "all":
+                case "e":
+                    System.out.println("[+] Executing all algorithms");
+                    i.flag_for_everything = 1;
+                    for(int h =1; h < 9; h++) {
+                        i.operations(h);
+                    }
+                    System.out.println("[*] The minimum time taken was : " + i.least_time);
+                    System.out.print("[*] The best algorithm is: ");
+                    switch(i.less_timed_algo) {
+                        case 1  :   
+                            System.out.println("Bubble Sort");
+                            break;
+                        case 2  :   
+                            System.out.println("Selection Sort");
+                            break;
+                        case 3  :   
+                            System.out.println("Insertion Sort");
+                            break;
+                        case 4  :   
+                            System.out.println("Quick Sort");
+                            break;
+                        case 5  :   
+                            System.out.println("Merge Sort");
+                            break;
+                        case 6  :   
+                            System.out.println("Heap Sort");
+                            break;
+                        case 7  :   
+                            System.out.println("Shell Sort");
+                            break;
+                        case 8  :   
+                            System.out.println("Bucket Sort");
+                            break;
+                        default :   System.out.println("Error");
+                    }
+                    break;
+                case "avg":
+                case "a":
+                    System.out.print("Enter the maximum number of trials: ");
+                    i.set_trials(in.nextInt());
+                    System.out.println();
                     break;
                 case "config":
                 case "c":

@@ -1,7 +1,8 @@
 package sorting;
 
-public class BubbleSort {
-    public static void bubble_srt(int array[]) {
+class BubbleSort {
+    private int[] ar;
+    void bubble_srt(int array[]) {
         int n = array.length;
         int k;
         for (int m = n; m >= 0; m--) {
@@ -12,18 +13,19 @@ public class BubbleSort {
                 }
             }
         }
-        printNumbers(array);
+        ar = array.clone();
+        //printNumbers(array);
     }
-    private static void swapNumbers(int i, int j, int[] array) {
+    private void swapNumbers(int i, int j, int[] array) {
         int temp;
         temp = array[i];
         array[i] = array[j];
         array[j] = temp;
     }
-    private static void printNumbers(int[] input) {
+    void printNumbers() {
         System.out.println("[+] Sorted elements: ");
-        for (int i = 0; i < input.length; i++) {
-           System.out.print(input[i] + " ");
+        for (int i = 0; i < ar.length; i++) {
+           System.out.print(ar[i] + " ");
         }
         System.out.println();
     }

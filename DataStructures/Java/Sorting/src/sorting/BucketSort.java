@@ -2,7 +2,8 @@ package sorting;
 
 class BucketSort 
 {
-    int[] sort(int[] sequence, int maxValue) 
+    int[] sorted;
+    void sort(int[] sequence, int maxValue) 
     {
         // Bucket Sort
         int[] Bucket = new int[maxValue + 1];
@@ -15,15 +16,15 @@ class BucketSort
         for (int i = 0; i < Bucket.length; i++)
             for (int j = 0; j < Bucket[i]; j++)
                 sorted_sequence[outPos++] = i;
- 
-        return sorted_sequence;
+        sorted = sorted_sequence;
     }
  
-    void printSequence(int[] sorted_sequence) 
+    void printSequence() 
     {
         System.out.println("[+] Sorted elements: ");
-        for (int i = 0; i < sorted_sequence.length; i++)
-            System.out.print(sorted_sequence[i] + " ");
+        for (int i = 0; i < sorted.length; i++)
+            System.out.print(sorted[i] + " ");
+        System.out.println();
     }
  
     int maxValue(int[] sequence) 
