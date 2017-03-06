@@ -57,7 +57,7 @@ class init {
             total += a[k];
             //System.out.println(a[k]);
         }
-        System.out.println("[*] The average time taken is: " + (total/a.length));
+        System.out.println("[*] The average time taken is: " + (total/a.length) + '\n');
         if(flag_for_everything == 1) {
             check_the_least((total/a.length), f);
         }
@@ -73,6 +73,7 @@ class init {
     void operations(int op) {
         avg_trials = new double[trials];
         int index=0;
+        //qleast_time = Double.MAX_VALUE;
         switch(op) {
             case 1  :
                 System.out.println("[+] Bubble sort selected");
@@ -85,7 +86,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                bs.printNumbers();
+                //bs.printNumbers();
                 display_avg(avg_trials, 1);
                 break;
             case 2  : 
@@ -99,7 +100,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                sel.display();
+                //sel.display();
                 display_avg(avg_trials, 2);
                 break;
             case 3  : 
@@ -115,7 +116,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                ins.display();
+                //ins.display();
                 display_avg(avg_trials, 3);
                 break;
             case 4  : 
@@ -129,7 +130,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                quick.display();
+                //quick.display();
                 display_avg(avg_trials, 4);
                 break;
             case 5  : 
@@ -143,7 +144,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                mer.display();
+                //mer.display();
                 display_avg(avg_trials, 5);
                 break;
             case 6  : 
@@ -157,7 +158,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                heap.display();
+                //heap.display();
                 display_avg(avg_trials, 6);
                 break;
             case 7  : 
@@ -172,7 +173,7 @@ class init {
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                shel.printSequence(shel.sequence);
+                //shel.printSequence(shel.sequence);
                 display_avg(avg_trials, 7);
                 break;
             case 8  : 
@@ -180,14 +181,14 @@ class init {
                 BucketSort buck =new BucketSort();
                 for(j = 0; j < trials; j++) {
                     random_elements = backup_re.clone();
-                    starttime = System.nanoTime();
                     int maxValue = buck.maxValue(random_elements);
+                    starttime = System.nanoTime();
                     buck.sort(backup_re, maxValue);
                     endtime = System.nanoTime();
                     avg_trials[index] = timecalc(starttime, endtime);
                     index++;
                 }
-                buck.printSequence();
+                //buck.printSequence();
                 display_avg(avg_trials, 8);
                 break;
             default  : 
@@ -257,6 +258,7 @@ public class Sorting {
                 case "e":
                     System.out.println("[+] Executing all algorithms");
                     i.flag_for_everything = 1;
+                    i.least_time = Double.MAX_VALUE;
                     for(int h =1; h < 9; h++) {
                         i.operations(h);
                     }
