@@ -1,23 +1,18 @@
-#include<stdio.h>
-#include<conio.h>
-#include<string.h>
-//byte stuffing
+#include <stdio.h>
 
 int main()
 {
     FILE *fp;
     int i,j,c,k,n;
     char a[100],ans[200],ans2[100],flag,e;
-    flag='\0';
-    e='\0';
     fp=fopen("bytestuffed.txt","w");
-    printf("Enter String : ") ;
-    gets(a);
-    printf("\nEnter flag :");
-    scanf("%c",&flag);
-    printf("\nEnter Stuffing char :");
-    e=getch();
-    putch(e);
+    printf("Enter String : ");
+    fgets(a, 100, stdin);
+    //Learnt that if you dont add space infront of %c, the next input will be skipped
+    printf("Enter flag :");
+    scanf(" %c", &flag);
+    printf("Enter Stuffing char :");
+    scanf(" %c", &e);
     ans[0]=flag;
     c=0;
     //transfering into file
@@ -35,7 +30,6 @@ int main()
           {
                           j++;
                           ans[j]=e;
-
           }
     }
     //disp
@@ -67,5 +61,4 @@ int main()
     fputs(ans2,fp);
     fclose(fp);
     printf("%s",ans2);
-    getch();
 }
