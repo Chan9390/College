@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <string.h>
 
 int main()
 {
@@ -8,6 +9,10 @@ int main()
     fp=fopen("bytestuffed.txt","w");
     printf("Enter String : ");
     fgets(a, 100, stdin);
+    //fgets reads newline character also
+    size_t ln = strlen(a) - 1;
+    if (a[ln] == '\n')
+       a[ln] = '\0';
     //Learnt that if you dont add space infront of %c, the next input will be skipped
     printf("Enter flag :");
     scanf(" %c", &flag);
@@ -34,7 +39,7 @@ int main()
     }
     //disp
     ans[j]=flag;
-    printf("\n\nStuffed String : ");
+    printf("\nStuffed String : ");
     for(i=0;i<=j;i++)
     {
                     printf("%c",ans[i]);
@@ -45,7 +50,7 @@ int main()
     fputs("Stuffed String : ",fp);
     fputs(ans,fp);
     //destuffing
-    printf("\n\nDe-Stuffed String : ");
+    printf("\nDe-Stuffed String : ");
     for(i=1,k=0;i<j;i++)
     {               if(ans[i+1]==flag && ans[i]==e)
                     continue;
@@ -60,5 +65,5 @@ int main()
     fputs("De-stuffed Bytes : ",fp);
     fputs(ans2,fp);
     fclose(fp);
-    printf("%s",ans2);
+    printf("%s\n",ans2);
 }
